@@ -1,8 +1,12 @@
-import java.time.Duration;
+package app;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Employee {
+import lombok.ToString;
+
+@ToString
+public class Employee implements Serializable {
 
     public String name;
     public int age;

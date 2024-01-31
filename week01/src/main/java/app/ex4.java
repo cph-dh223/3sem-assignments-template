@@ -1,3 +1,4 @@
+package app;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -26,7 +27,8 @@ public class ex4 {
             LocalDate.of(2003, 9, 1),
             LocalDate.of(2004, 10, 1),
             LocalDate.of(2005, 11, 1),
-            LocalDate.of(2006, 12, 1));
+            LocalDate.of(2006, 12, 1)
+        );
         Supplier<Employee> employeeSupplier = () -> {
             Random random = new Random();
             int randomIndex = random.nextInt(names.size());
@@ -35,7 +37,7 @@ public class ex4 {
             LocalDate randomBirthDay = birthDates.get(randomAge);
             return new Employee(randomName, randomBirthDay);
         };
-
+        
         List<Employee> employees = Stream.generate(employeeSupplier).limit(100).collect(Collectors.toList());
         
         for (Employee employee : employees) {

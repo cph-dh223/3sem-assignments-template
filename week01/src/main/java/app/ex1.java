@@ -1,3 +1,4 @@
+package app;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

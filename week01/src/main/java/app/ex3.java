@@ -1,3 +1,4 @@
+package app;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,6 @@ public class ex3 {
     public static Function<Employee,String> empToName = a -> a.name;
     public static Predicate<Employee> ofAge = a -> a.age > 18;
     public static void main(String[] args) {
-        
         int[] arr = Stream.iterate((int)1, a -> a+1).limit(100).mapToInt(a -> a).toArray();
         IntPredicate divBySeven = a -> a % 7 == 0;
         Arrays.stream(arr).filter(divBySeven).forEach(a -> System.out.print(a + " "));
@@ -30,15 +30,11 @@ public class ex3 {
             return new Employee(randomName, randomAge);
         };
 
-        
-        
         for (int i = 0; i < 5; i++) {
             Employee emp = employeeSupplier.get();
             println.accept(empToName.apply(emp));
             System.out.println(ofAge.test(emp));
             System.out.println();
         }
-
-
     }
 }
