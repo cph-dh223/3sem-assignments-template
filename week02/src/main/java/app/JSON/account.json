@@ -1,0 +1,76 @@
+[{
+    "firstName": "Alice",
+    "lastName": "Alpha",
+    "birthDate": 20,
+    "address": {
+        "street": "home",
+        "city": "City",
+        "zipCode": 1000
+    },
+    "account": {
+        "id": "asdfe",
+        "balance": "1000DKK",
+        "isActive": true
+    }
+},
+{
+    "firstName": "Bob",
+    "lastName": "Beta",
+    "birthDate": 20,
+    "address": {
+        "street": "home",
+        "city": "City",
+        "zipCode": 1000
+    },
+    "account": {
+        "id": "asdfe",
+        "balance": "1000DKK",
+        "isActive": false
+    }
+},
+{
+    "firstName": "Charly",
+    "lastName": "Gamma",
+    "birthDate": 20,
+    "address": {
+        "street": "home",
+        "city": "City",
+        "zipCode": 1000
+    },
+    "account": {
+        "id": "asdfe",
+        "balance": "1500DKK",
+        "isActive": true
+    }
+},
+{
+    "firstName": "Denis",
+    "lastName": "Delta",
+    "birthDate": 20,
+    "address": {
+        "street": "home",
+        "city": "City",
+        "zipCode": 1000
+    },
+    "account": {
+        "id": "asdfe",
+        "balance": "1000DKK",
+        "isActive": true
+    }
+},
+{
+    "firstName": "Elsa",
+    "lastName": "Epcylon",
+    "birthDate": 20,
+    "address": {
+        "street": "home",
+        "city": "City",
+        "zipCode": 1000
+    },
+    "account": {
+        "id": "asdfe",
+        "balance": "1000DKK",
+        "isActive": true
+    }
+}
+]

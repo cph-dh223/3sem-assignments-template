@@ -2,9 +2,10 @@
 
 ## Overview
 
-- Your name
+- David Ajken Hansen
 - which assignment are included
-- which one are completed and which one are not
+  - JSON 1-3
+  - API 1-2
+  - Threads 1-4 & 6
+- all of the above
 
-## Friday presentation
-- add the friday presentation into the weekly folder
