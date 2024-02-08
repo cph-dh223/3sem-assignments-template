@@ -3,14 +3,15 @@ package app.Threads;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -30,27 +31,43 @@ public class ex6 {
     };
 
     public static void main(String[] args) {
+        List<Future<IDTO>> dotFutures = new ArrayList<>();
         ExecutorService es = Executors.newCachedThreadPool();
-        es.submit(() -> {
-            System.out.println(getDadJoke());
-            System.out.println();
+        
+        dotFutures.add(
+            es.submit(() -> {
+                return getDadJoke();
+            })
+        );
+        dotFutures.add(
+            es.submit(() -> {
+                return getChukJoke();
+            })
+        );
+        dotFutures.add(
+            es.submit(() -> {
+                return getKanyeDTO();
+            })
+        );
+        dotFutures.add(
+            es.submit(() -> {
+                return getTrumpThinkDTO();
+            })
+        );
+        dotFutures.add(
+            es.submit(() -> {
+                return getSpaceXDTO();
+            })
+        );
+        dotFutures.stream().parallel().forEach(e->{
+            try {
+                System.out.println(e.get() + "\n");
+            } catch (InterruptedException | ExecutionException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
-        es.submit(() -> {
-            System.out.println(getChukJoke());
-            System.out.println();
-        });
-        es.submit(() -> {
-            System.out.println(getKanyeDTO());
-            System.out.println();
-        });
-        es.submit(() -> {
-            System.out.println(getTrumpThinkDTO());
-            System.out.println();
-        });
-        es.submit(() -> {
-            System.out.println(getSpaceXDTO());
-            System.out.println();
-        });
+        
         System.out.println("main thread done");
         System.out.println();
         es.shutdown();
@@ -146,17 +163,20 @@ public class ex6 {
 
     @Getter
     @Setter
-    @ToString
-    private static class DadJokeDTO{
+    private static class DadJokeDTO implements IDTO {
         private String id;
         private String joke;
         private int status;
+        @Override
+        public String toString() {
+            return "Dad joke: " + joke;
+        }
     }
 
     @Getter
     @Setter
     @ToString
-    private static class ChukJokeDTO{
+    private static class ChukJokeDTO implements IDTO {
         String[] categories;
         LocalDate created_at;
         String icon_url;
@@ -180,7 +200,7 @@ public class ex6 {
     @Getter
     @Setter
     @ToString
-    private static class KanyeDTO {
+    private static class KanyeDTO implements IDTO {
         String quote;
     }
 
@@ -188,7 +208,7 @@ public class ex6 {
     @Setter
     @ToString
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class TrumpThinkDTO{
+    private static class TrumpThinkDTO implements IDTO {
         String message;
         // attributes nlp_attributes;
         
@@ -204,9 +224,14 @@ public class ex6 {
     @Setter
     @ToString
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class SpaceXDTO {
+    private static class SpaceXDTO implements IDTO {
         String id;
         int flight_number;
         boolean success;
+    }
+
+    private static interface IDTO {
+        @Override
+        String toString();        
     }
 }
