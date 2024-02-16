@@ -11,27 +11,36 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Builder
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Package {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    int id;
+    private int id;
+
     @Column(name = "tracking_number", nullable = false)
-    String trackingNumber;
+    private String trackingNumber;
+
     @Column(name = "sender_name", nullable = false)
-    String SenderName;
+    private String SenderName;
+
     @Column(name = "receiver_name", nullable = false)
-    String ReceiverName;
+    private String ReceiverName;
+
     @Column(name = "delivery_statuss", nullable = false)
-    DeliveryStatus deliveryStatus;
+    private DeliveryStatus deliveryStatus;
+
     @Column(name = "timestamp", nullable = false)
-    Timestamp timestamp;
+    private Timestamp timestamp;
 
     
     @PreUpdate
@@ -44,4 +53,5 @@ public class Package {
         IN_TRANSIT, 
         DELIVERED
     }
+
 }

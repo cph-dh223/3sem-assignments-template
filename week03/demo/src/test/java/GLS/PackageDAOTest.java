@@ -1,20 +1,12 @@
 package GLS;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PackageDAOTest {
@@ -32,10 +24,11 @@ public class PackageDAOTest {
     @Order(0)
     @Test
     public void testPersistPackage() {
-        Package pkg = new Package();
-        pkg.setTrackingNumber("ABC123");
-        pkg.setSenderName("Sender");
-        pkg.setReceiverName("Receiver");
+        Package.PackageBuilder pb = Package.builder();
+        pb.trackingNumber("ABC123");
+        pb.SenderName("Sender");
+        pb.ReceiverName("Receiver");
+        Package pkg = pb.build();
         pkg.setDeliveryStatus(Package.DeliveryStatus.PENDING);
 
         Package retrievedPackage = packageDAO.persistPackage(pkg);
