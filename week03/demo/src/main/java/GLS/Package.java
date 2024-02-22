@@ -14,14 +14,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+// @Data
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Package {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -30,6 +31,7 @@ public class Package {
     @Column(name = "tracking_number", nullable = false)
     private String trackingNumber;
 
+    @Setter
     @Column(name = "sender_name", nullable = false)
     private String SenderName;
 
