@@ -1,8 +1,14 @@
 package day3_4.ressources;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import day3_4.dtos.HotelDTO;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,19 +20,39 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@Entity
 @ToString
-@NoArgsConstructor
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    String name;
+    private String name;
+    private String address;
 
-    @OneToMany
-    List<Room> rooms;
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
+    @JsonManagedReference
+    private List<Room> rooms;
+    public Hotel(){
+        rooms = new ArrayList<>();
+    }
+    
     public Hotel(HotelDTO hotelDTO){
-        
+        this.id = hotelDTO.id();
+        this.name = hotelDTO.name();
+        this.address = hotelDTO.address();
+        this.rooms = hotelDTO.rooms();
+        rooms.forEach(r -> r.setHotel(this));
+    }
+
+    public Hotel(String name, String address) {
+        this.name = name;
+        this.address = address;
+        rooms = new ArrayList<>();
+    }
+
+    public void addRoom(Room room){
+        rooms.add(room);
+        room.setHotel(this);
     }
 }

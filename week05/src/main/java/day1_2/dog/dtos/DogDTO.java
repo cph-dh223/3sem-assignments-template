@@ -1,4 +1,4 @@
-package day1_2.dtos;
+package day1_2.dog.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,9 +2,18 @@
 
 ## Overview
 
-- Your name
-- which assignment are included
-- which one are completed and which one are not
+- David Ajken Hansen
+- included:
+  - day 1 & 2
+    - vet
+    - dog
+  - day 3 & 4
+- completed
+  - dog
+    - all
+  - vet
+    - part 1 to 7
+    - part 9
+  - day 3 & 4
+    - part 1 to 3
 
-## Friday presentation
-- add the friday presentation into the weekly folder

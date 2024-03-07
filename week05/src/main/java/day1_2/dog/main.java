@@ -1,10 +1,10 @@
-package day1_2;
+package day1_2.dog;
 
 import java.util.Random;
 import java.util.function.Supplier;
-import day1_2.controllers.DogController;
-import day1_2.controllers.KeyNotFoundExeption;
-import day1_2.dtos.DogDTO;
+import day1_2.dog.controllers.DogController;
+import day1_2.dog.controllers.KeyNotFoundExeption;
+import day1_2.dog.dtos.DogDTO;
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
 import io.javalin.apibuilder.EndpointGroup;

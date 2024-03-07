@@ -1,4 +1,4 @@
-package day1_2.controllers;
+package day1_2.dog.controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import day1_2.main;
-import day1_2.dtos.DogDTO;
+import day1_2.dog.main;
+import day1_2.dog.dtos.DogDTO;
 import io.javalin.http.Context;
 
 public class DogController {
