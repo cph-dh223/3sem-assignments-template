@@ -1,7 +1,5 @@
-package day3_4.controlers;
+package hotel.controlers;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +7,10 @@ import java.util.stream.Collectors;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import day3_4.daos.HotelDAO;
-import day3_4.ressources.Hotel;
-import day3_4.ressources.Room;
+import hotel.daos.HotelDAO;
+import hotel.ressources.Hotel;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
-import jakarta.servlet.http.HttpServletResponse;
 
 public class HotelController implements IController{
 
@@ -29,11 +24,9 @@ public class HotelController implements IController{
     }
 
     public Handler getAll() {
-        List<Hotel> hotelList = hotelDAO.getAll();
-        hotels = hotelList.stream().collect(Collectors.toMap(h -> h.getId(), h -> h));
         return ctx -> {
-            String json = objectMapper.writeValueAsString(hotelList);
-            System.out.println(json);
+            updateHotes();
+            String json = objectMapper.writeValueAsString(hotels.values());
             ctx.status(HttpStatus.OK).json(json);
         };
         
@@ -42,8 +35,9 @@ public class HotelController implements IController{
     @Override
     public Handler getById() {
         return ctx -> {
-            HttpServletResponse response = ctx.res();
-            response.setHeader("X-EXAMPLE-HOTEL-ID", "Hotel id");
+            if(hotels.size() == 0) {
+                updateHotes();
+            }
             Integer id = Integer.parseInt(ctx.pathParam("id"));
             Hotel hotel = hotels.get(id);
             if(hotel == null) {
@@ -55,8 +49,16 @@ public class HotelController implements IController{
         };
     }
 
+    private void updateHotes() {
+            List<Hotel> hotelList = hotelDAO.getAll();
+            hotels = hotelList.stream().collect(Collectors.toMap(h -> h.getId(), h -> h));    
+    }
+
     public Handler create() {
         return ctx -> {
+            if(hotels.size() == 0) {
+                updateHotes();
+            }
             Hotel hotel = ctx.bodyAsClass(Hotel.class);
 
             hotel = hotelDAO.create(hotel);
@@ -68,18 +70,22 @@ public class HotelController implements IController{
     // /create?name=steve&id=10&
     public Handler delete() {
         return ctx -> {
+            if(hotels.size() == 0) {
+                updateHotes();
+            }
             Integer id = Integer.parseInt(ctx.pathParam("id"));
             Hotel hotel = hotels.get(id);
             hotelDAO.delete(hotel);
 
-            String json =objectMapper.writeValueAsString(hotel);
-            ctx.status(HttpStatus.NO_CONTENT).json(json);
-
+            ctx.status(HttpStatus.NO_CONTENT);
         };
     }
 
     public Handler getHotelRooms() {
         return ctx -> {
+            if(hotels.size() == 0) {
+                updateHotes();
+            }
             Integer id = Integer.parseInt(ctx.pathParam("id"));
             String json = objectMapper.writeValueAsString(hotels.get(id).getRooms());
             ctx.status(HttpStatus.OK).json(json);
@@ -89,6 +95,9 @@ public class HotelController implements IController{
     @Override
     public Handler update() {
         return ctx -> {
+            if(hotels.size() == 0) {
+                updateHotes();
+            }
             Integer id = Integer.parseInt(ctx.pathParam("id"));
             Hotel changedHotel = ctx.bodyAsClass(Hotel.class);
             Hotel hotel = hotels.get(id);
@@ -97,8 +106,8 @@ public class HotelController implements IController{
 
             hotelDAO.update(hotel);
 
-            String json =objectMapper.writeValueAsString(hotel);
-            ctx.status(HttpStatus.ACCEPTED).json(json);
+            String json = objectMapper.writeValueAsString(hotel);
+            ctx.status(HttpStatus.OK).json(json);
         };
     }
 
