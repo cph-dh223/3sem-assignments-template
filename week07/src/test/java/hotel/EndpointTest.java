@@ -3,31 +3,24 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import hotel.config.ApplicationConfig;
 import hotel.config.HibernateConfig;
 import hotel.config.Routs;
 import hotel.ressources.Hotel;
 import hotel.ressources.Room;
 import io.javalin.http.ContentType;
-import io.javalin.http.HttpStatus;
 import io.restassured.RestAssured;
 import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
 import jakarta.persistence.EntityManagerFactory;
 import static io.restassured.RestAssured.*;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /*
@@ -36,7 +29,7 @@ import java.util.stream.Collectors;
 public class EndpointTest {
 
     private static ApplicationConfig appConfig;
-    private static final String BASE_URL = "http://localhost:7777";
+    private static final String BASE_URL = "http://localhost:7777/api";
     private static EntityManagerFactory emfTest;
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static Map<Integer,Hotel> hotels;
@@ -53,11 +46,10 @@ public class EndpointTest {
 
         // Start server
         appConfig = ApplicationConfig.
-                getInstance()
+                getInstance(emfTest)
                 .initiateServer()
-                .setGeneralExceptionHandling()
-                .setRoutes(Routs.getResourses(emfTest))
-                .setCORS()
+                .setExceptionHandling()
+                .setRoute(Routs.getResourses(emfTest))
                 .startServer(7777)
         ;
     }
@@ -79,7 +71,8 @@ public class EndpointTest {
     
     @Test
     public void defTest(){
-        given().when().get("/").peek().then().statusCode(200);
+        
+        given().when().get("/").peek().then().assertThat().statusCode(200);
     }
     
     @Test

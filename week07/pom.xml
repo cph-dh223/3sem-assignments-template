@@ -4,27 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>app</groupId>
-    <artifactId>app</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>Javalin_demo_td</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <hibernate-version>6.2.4.Final</hibernate-version>
-        <restassured.version>5.3.2</restassured.version>
-        <testcontainers.version>1.19.5</testcontainers.version>
-        <junit.version>5.9.1</junit.version>
+        <junit.version>5.7.2</junit.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
-        <restassured.version>5.3.0</restassured.version>
+        <restassured.version>5.3.2</restassured.version>
+        <hibernate.version>6.2.4.Final</hibernate.version>
+        <testcontainers.version>1.19.5</testcontainers.version>
         <jbcrypt.version>0.4</jbcrypt.version>
+        <postgresql.version>42.6.0</postgresql.version>
         <jwt.version>9.0.1</jwt.version>
         <nimbus.version>9.10</nimbus.version>
+        <db.name>hoteldb</db.name>
     </properties>
 
-    <!--  javalin  -->
     <dependencies>
         <dependency>
             <groupId>io.javalin</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <!-- https://www.baeldung.com/hamcrest-core-matchers -->
@@ -151,8 +151,29 @@
             <version>${nimbus.version}</version>
         </dependency>
 
-
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!--  https://www.baeldung.com/java-accessing-maven-properties  -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/properties-from-pom.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>

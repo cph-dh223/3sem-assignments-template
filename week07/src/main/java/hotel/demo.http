@@ -1,0 +1,13 @@
+
+###
+POST http://localhost:7070/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "David",
+    "password": "1234"
+}
+
+###
+GET http://localhost:7070/api/protected/user_demo HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEYXZpZCBBamtlbiBIYW5zZW4iLCJzdWIiOiJEYXZpZCIsImV4cCI6MTcxMDg1NTY2OCwicm9sZXMiOiIsdXNlciIsInVzZXJuYW1lIjoiRGF2aWQifQ.Pfb_FMKFgkSEoxlsbBKtgKrW9Lo4t_DZIk1ZcvlLqAY
